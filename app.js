@@ -1,12 +1,12 @@
 
   // Initialize Firebase
   var config = {
-    apiKey: "AIzaSyD-_orkNuNUHamDNxucvu5HmwnocMNSb1I",
-    authDomain: "train-time-2320f.firebaseapp.com",
-    databaseURL: "https://train-time-2320f.firebaseio.com",
-    projectId: "train-time-2320f",
-    storageBucket: "train-time-2320f.appspot.com",
-    messagingSenderId: "581033713776"
+    apiKey: "AIzaSyCNNBSPJI__eQS2SOG8FctS8AL700H9YP4",
+    authDomain: "chocho-3c065.firebaseapp.com",
+    databaseURL: "https://chocho-3c065.firebaseio.com",
+    projectId: "chocho-3c065",
+    storageBucket: "chocho-3c065.appspot.com",
+    messagingSenderId: "431471295360"
   };
   firebase.initializeApp(config);
 //  Button for adding trains
@@ -16,30 +16,30 @@
 
      // Grabs user input
        var trainName = $("#name-input").val().trim();
-    //    console.log(trainName);
+       console.log(trainName);
        var trainDistn = $("#destination-input").val().trim();
-    //    console.log(trainDistn);
-       var frstTrTime = moment($("#time-input").val().trim(), "hh:mm am/pm").format("X");
-    //    console.log(firstTrainTime);
-       var freq = $("#frequency-input").val().trim();
-        //   console.log(frequency);
+       console.log(trainDistn);
+       var firstTrainTime= $("#time-input").val().trim();
+       console.log(firstTrainTime);
+       var frequency = $("#frequency-input").val().trim();
+          console.log(frequency);
         
         // Creates local "temporary" object for holding train data
-       var newTrain = {
+       var newTrain= {
         name: trainName,
         destination:trainDistn,
-        firstTrainTime:frstTrTime,
-        frequency: freq
+        trainTime:firstTrainTime,
+        freq:frequency
       };
 
-      // Uploads employee data to the database
+      // Uploads train data to the database
          database.ref().push(newTrain);
 
          // Logs to console
-            console.log(newTrain.trainName);
+            console.log(newTrain.name);
             console.log(newTrain.destination);
-            console.log(newTrain.firstTrainTime);
-            console.log(newTrain.frequency);
+            console.log(newTrain.trainTime);
+            console.log(newTrain.freq);
 
         // Clears all of the text-boxes
             $("#name-input").val("");
@@ -48,31 +48,34 @@
             $("#frequency-input").val("");
 });
 
-//  Create Firebase event for adding train to the database and a row in the html when a user adds an entry
+// //  Create Firebase event for adding train to the database and a row in the html when a user adds an entry
      database.ref().on("child_added", function(childSnapshot) {
          console.log(childSnapshot.val());
 
-        var trainName  = childSnapshot.val().name;
-        var trainDistn = childSnapshot.val().destination;
-        var frstTrTime = childSnapshot.val().firstTrainTime;
-        var freq       = childSnapshot.val(). frequency;
+        var trainName     = childSnapshot.val().name;
+        var trainDistn    = childSnapshot.val().destination;
+        var firstTrainTime= childSnapshot.val().trainTime;
+        var frequency     = childSnapshot.val(). freq;
 
           // Train Info
             console.log(trainName);
             console.log(trainDistn);
-            console.log(frstTrTime);
-            console.log(freq);
+            console.log(firstTrainTime);
+            console.log(frequency);
 
        // Prettify the train start???????
-          var diffTime = moment().diff(moment(firstTimeConverted), "minutes");
+       
+      //  moment().format("hh:mm");
+      //  var frstTrTime = moment($("#time-input").val().trim().format("hh:mm));
+          
 
         // Create the new row
             var newRow = $("<tr>").append(
                 $("<td>").text(trainName),
                 $("<td>").text(trainDistn),
-                $("<td>").text(frstTrTime),
-                $("<td>").text(frstTrTime),
-                $("<td>").text( freq  )
+                $("<td>").text(frequency),
+                $("<td>").text(firstTrainTime)
+               
             
             );
 
