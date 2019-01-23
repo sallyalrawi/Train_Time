@@ -75,8 +75,6 @@
                 $("<td>").text(trainDistn),
                 $("<td>").text(frequency),
                 $("<td>").text(firstTrainTime)
-               
-            
             );
 
      // Append the new row to the table
