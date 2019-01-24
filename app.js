@@ -55,7 +55,7 @@
         var trainName     = childSnapshot.val().name;
         var trainDistn    = childSnapshot.val().destination;
         var firstTrainTime= childSnapshot.val().trainTime;
-        var frequency     = childSnapshot.val(). freq;
+        var frequency     = childSnapshot.val().freq;
 
           // Train Info
             console.log(trainName);
@@ -65,16 +65,21 @@
 
        // Prettify the train start???????
        
-      //  moment().format("hh:mm");
+        // console.log(moment(firstTrainTime).fromNow());
       //  var frstTrTime = moment($("#time-input").val().trim().format("hh:mm));
-          
+      var differenceTimes = moment().diff(moment(firstTrainTime, 'X'), "minutes");
+      var tRemainder = differenceTimes % frequency;
+      var tMinutes = frequency - tRemainder;
+
+      console.log(tMinutes);
 
         // Create the new row
             var newRow = $("<tr>").append(
                 $("<td>").text(trainName),
                 $("<td>").text(trainDistn),
                 $("<td>").text(frequency),
-                $("<td>").text(firstTrainTime)
+                $("<td>").text(moment().add(tMinutes, "m").format("hh:mm")),
+                $("<td>").text(tMinutes),
             );
 
      // Append the new row to the table
