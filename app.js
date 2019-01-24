@@ -1,5 +1,5 @@
 
-  // Initialize Firebase
+// Initialize Firebase.................................
   var config = {
     apiKey: "AIzaSyCNNBSPJI__eQS2SOG8FctS8AL700H9YP4",
     authDomain: "chocho-3c065.firebaseapp.com",
@@ -9,12 +9,13 @@
     messagingSenderId: "431471295360"
   };
   firebase.initializeApp(config);
-//  Button for adding trains
+
+//  Button for adding trains..............................
   var database = firebase.database();
   $("#add-train").on("click", function(event) {
     event.preventDefault();
 
-     // Grabs user input
+// Grabs user input........................................
        var trainName = $("#name-input").val().trim();
        console.log(trainName);
        var trainDistn = $("#destination-input").val().trim();
@@ -24,31 +25,31 @@
        var frequency = $("#frequency-input").val().trim();
           console.log(frequency);
         
-        // Creates local "temporary" object for holding train data
-       var newTrain= {
-        name: trainName,
-        destination:trainDistn,
-        trainTime:firstTrainTime,
-        freq:frequency
-      };
+// Creates local "temporary" object for holding train data..
+            var newTrain= {
+              name: trainName,
+              destination:trainDistn,
+              trainTime:firstTrainTime,
+              freq:frequency
+            };
 
-      // Uploads train data to the database
+// Uploads train data to the database........................
          database.ref().push(newTrain);
 
-         // Logs to console
+// Logs to console...........................................
             console.log(newTrain.name);
             console.log(newTrain.destination);
             console.log(newTrain.trainTime);
             console.log(newTrain.freq);
 
-        // Clears all of the text-boxes
+// Clears all of the text-boxes..............................
             $("#name-input").val("");
             $("#destination-input").val("");
             $("#time-input").val("");
             $("#frequency-input").val("");
 });
 
-// //  Create Firebase event for adding train to the database and a row in the html when a user adds an entry
+//  Create Firebase event for adding train to the database and a row in the html when a user adds an entry...
      database.ref().on("child_added", function(childSnapshot) {
          console.log(childSnapshot.val());
 
@@ -57,23 +58,21 @@
         var firstTrainTime= childSnapshot.val().trainTime;
         var frequency     = childSnapshot.val().freq;
 
-          // Train Info
+// Train Info.................................................
             console.log(trainName);
             console.log(trainDistn);
             console.log(firstTrainTime);
             console.log(frequency);
 
-       // Prettify the train start???????
-       
-        // console.log(moment(firstTrainTime).fromNow());
-      //  var frstTrTime = moment($("#time-input").val().trim().format("hh:mm));
+// Prettify the train start....................................
+
       var differenceTimes = moment().diff(moment(firstTrainTime, 'X'), "minutes");
       var tRemainder = differenceTimes % frequency;
       var tMinutes = frequency - tRemainder;
 
       console.log(tMinutes);
 
-        // Create the new row
+// Create the new row............................................
             var newRow = $("<tr>").append(
                 $("<td>").text(trainName),
                 $("<td>").text(trainDistn),
@@ -82,7 +81,7 @@
                 $("<td>").text(tMinutes),
             );
 
-     // Append the new row to the table
+// Append the new row to the table......................................
          $("#train-schedule-table > tbody").append(newRow);
 });
 
